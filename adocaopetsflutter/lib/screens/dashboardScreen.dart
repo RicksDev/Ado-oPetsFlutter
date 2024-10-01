@@ -9,7 +9,8 @@ class Dashboardscreen extends StatelessWidget {
       appBar: AppBar(title:const Text('Adoção do Ricks'),),
       body:Column(
         children: [
-          Image.asset('assets/images/Rectangle 39.png')
+          Image.asset('assets/img/Rectangle.png')
+          
         ],
       ),
     );
