@@ -75,11 +75,13 @@ class _PetsListScreenState extends State<PetsListScreen> {
 
     // Navegar para as páginas correspondentes ao clicar no menu
     if (index == 0) {
-      // Aqui navega para a página de login e cadastro
-      Navigator.pushNamed(context, '/login');
-    } else if (index == 1) {
       // Aqui seria para a página da lista de pets adotados
       Navigator.pushNamed(context, '/adoptedPets');
+    } else if (index == 1) {
+      // Ação para o segundo item (sem navegação por enquanto)
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Na Adoção de Pets do Ricks, acreditamos que cada animal merece uma segunda chance. Nossa missão é conectar corações e lares a peludos que estão à espera de um novo começo. Os pets que resgatamos vêm de diversas histórias, mas todos têm algo em comum: a vontade de amar e serem amados.")),
+      );
     }
   }
 
@@ -160,12 +162,12 @@ class _PetsListScreenState extends State<PetsListScreen> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.favorite),
             label: 'Me Adote',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.info),
+            label: 'Sobre',
           ),
         ],
         currentIndex: _selectedIndex,

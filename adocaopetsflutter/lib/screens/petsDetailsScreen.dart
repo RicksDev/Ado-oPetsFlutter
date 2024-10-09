@@ -111,25 +111,34 @@ class PetDetailScreen extends StatelessWidget {
           const SizedBox(height: 8),
 
           // Botão Adotar
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: ElevatedButton(
-              onPressed: () {
-                // Adiciona o pet à lista de adotados
-                adoptedPets.add(pet);
+          Column(
+            children: [
+              // Outros widgets, como a imagem ou informações do pet
+              const SizedBox(height: 150), // Espaço extra acima do botão
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Adiciona o pet à lista de adotados
+                    adoptedPets.add(pet);
 
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Pet adicionado à lista de "Me Adote"!')),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                textStyle: const TextStyle(fontSize: 20),
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                          content:
+                              Text('Pet adicionado à lista de "Me Adote"!')),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16, horizontal: 25),
+                    textStyle: const TextStyle(fontSize: 20),
+                  ),
+                  child: const Text('Me adote!'),
+                ),
               ),
-              child: const Text('Me adote!'),
-            ),
-          ),
+            ],
+          )
         ],
       ),
     );
