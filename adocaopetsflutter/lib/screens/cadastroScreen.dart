@@ -17,8 +17,6 @@ class _CadastroScreenState extends State<CadastroScreen> {
 
   void _cadastrar() {
     final nome = _nomeController.text;
-    final telefone = _telefoneController.text;
-    final email = _emailController.text;
     final senha = _senhaController.text;
 
     // Adiciona o novo usuário à lista
@@ -51,14 +49,6 @@ class _CadastroScreenState extends State<CadastroScreen> {
             TextField(
               controller: _nomeController,
               decoration: const InputDecoration(labelText: 'Nome'),
-            ),
-            TextField(
-              controller: _telefoneController,
-              decoration: const InputDecoration(labelText: 'Telefone'),
-            ),
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(labelText: 'E-mail'),
             ),
             TextField(
               controller: _senhaController,

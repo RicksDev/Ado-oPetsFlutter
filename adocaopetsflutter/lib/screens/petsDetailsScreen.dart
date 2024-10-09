@@ -1,6 +1,9 @@
 import 'package:adocaopetsflutter/screens/Pets.dart';
 import 'package:flutter/material.dart';
 
+// Lista global para salvar os pets "adotados"
+List<Pet> adoptedPets = [];
+
 class PetDetailScreen extends StatelessWidget {
   final Pet pet;
 
@@ -33,21 +36,18 @@ class PetDetailScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center, // Centraliza a Row
               children: [
                 Expanded(
-                  // Faz com que o Text ocupe toda a largura disponível
                   child: Text(
                     pet.name,
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
-                    textAlign: TextAlign
-                        .center, // Centraliza o texto dentro do espaço disponível
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ],
             ),
           ),
-
           const SizedBox(height: 8),
           // Localização
           Padding(
@@ -115,7 +115,12 @@ class PetDetailScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: ElevatedButton(
               onPressed: () {
-                // Ação do botão
+                // Adiciona o pet à lista de adotados
+                adoptedPets.add(pet);
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Pet adicionado à lista de "Me Adote"!')),
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.orange,

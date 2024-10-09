@@ -22,7 +22,7 @@ final List<Pet> pets = [
       sex: 'Macho',
       color: 'Caramelo',
       breed: 'Labrador mestiço',
-      weight: 4,
+      weight: 8,
       description: 'Caramelo doido para distribuir amor por ai'),
   Pet(
     name: "Samantha",
@@ -41,13 +41,47 @@ final List<Pet> pets = [
       sex: 'Macho',
       color: 'Caramelo',
       breed: 'Labrador mestiço',
-      weight: 4,
+      weight: 8,
+      description: 'Caramelo doido para distribuir amor por ai'),
+  Pet(
+      name: 'Caramelo',
+      image: 'assets/img/caramelo.png',
+      location: 'São Paulo (8.9Km)',
+      sex: 'Macho',
+      color: 'Caramelo',
+      breed: 'Labrador mestiço',
+      weight: 8,
       description: 'Caramelo doido para distribuir amor por ai'),
   // Outros pets...
 ];
 
-class PetsListScreen extends StatelessWidget {
+
+
+class PetsListScreen extends StatefulWidget {
   const PetsListScreen({super.key});
+
+  @override
+  State<PetsListScreen> createState() => _PetsListScreenState();
+}
+
+class _PetsListScreenState extends State<PetsListScreen> {
+  int _selectedIndex = 0;
+
+  // Função para alternar entre páginas do BottomNavigationBar
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    // Navegar para as páginas correspondentes ao clicar no menu
+    if (index == 0) {
+      // Aqui navega para a página de login e cadastro
+      Navigator.pushNamed(context, '/login');
+    } else if (index == 1) {
+      // Aqui seria para a página da lista de pets adotados
+      Navigator.pushNamed(context, '/adoptedPets');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +141,10 @@ class PetsListScreen extends StatelessWidget {
                           const SizedBox(height: 8),
                           Text(
                             pet.location,
-                            style: const TextStyle(color: Colors.grey, fontSize: 14),
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14,
+                            ),
                           ),
                           const SizedBox(height: 16),
                         ],
@@ -119,6 +156,21 @@ class PetsListScreen extends StatelessWidget {
             ),
           );
         },
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Me Adote',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.orange,
+        onTap: _onItemTapped,
       ),
     );
   }

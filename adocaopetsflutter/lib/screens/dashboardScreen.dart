@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'loginScreen.dart';
-import 'cadastroScreen.dart';
 import 'petsListScreen.dart';
 
 class DashboardScreen extends StatelessWidget {

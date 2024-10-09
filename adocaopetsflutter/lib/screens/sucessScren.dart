@@ -10,8 +10,8 @@ class SuccessScreen extends StatelessWidget {
         title: const Text('Sucesso'),
         centerTitle: true,
       ),
-      body: Center(
-        child: const Text(
+      body: const Center(
+        child: Text(
           'Login realizado com sucesso!',
           style: TextStyle(fontSize: 24),
         ),
