@@ -2,11 +2,7 @@ import 'package:adocaopetsflutter/Widgets/cadastroWidget.dart';
 import 'package:adocaopetsflutter/Widgets/loginWidget.dart';
 import 'package:flutter/material.dart';
 import 'petsListScreen.dart';
-
-
-String? registeredName;
-String? registeredPassword;
-bool isLoggedIn = false; // Variável global para controlar o estado do login
+import '../controller/dashboard_controller.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -16,6 +12,8 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  final DashboardController controller = DashboardController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +58,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              isLoggedIn
+              controller.isLoggedIn
                   ? ElevatedButton(
                       onPressed: () {
                         Navigator.push(
@@ -81,7 +79,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     )
                   : ElevatedButton(
                       onPressed: () {
-                        // Puxa o widget de Login ao invés de uma tela
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -91,11 +88,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 backgroundColor: Colors.orange,
                               ),
                               body: LoginWidget(
-                                registeredName: registeredName,
-                                registeredPassword: registeredPassword,
+                                registeredName: controller.currentUser?.name,
+                                registeredPassword: controller.currentUser?.email,
                                 onLoginSuccess: () {
                                   setState(() {
-                                    isLoggedIn = true; // Define o estado como logado
+                                    controller.isLoggedIn = true;
                                   });
                                 },
                               ),
@@ -115,7 +112,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
               ElevatedButton(
                 onPressed: () {
-                  // Puxa o widget de Cadastro ao invés de uma tela
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -125,10 +121,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           backgroundColor: Colors.orange,
                         ),
                         body: CadastroWidget(
-                          onCadastroSuccess: (name, password) {
+                          onCadastroSuccess: (name, email) {
                             setState(() {
-                              registeredName = name;
-                              registeredPassword = password;
+                              controller.register(name, email, '123456789', false);
                             });
                           },
                         ),

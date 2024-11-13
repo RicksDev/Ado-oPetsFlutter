@@ -1,11 +1,12 @@
-import 'package:adocaopetsflutter/screens/Pets.dart';
+import 'package:adocaopetsflutter/model/pet.dart';
 import 'package:flutter/material.dart';
+// Corrija o caminho de importação conforme a estrutura do seu projeto
 
 // Lista global para salvar os pets "adotados"
-List<Pet> adoptedPets = [];
+List<Pets> adoptedPets = [];
 
 class PetDetailScreen extends StatelessWidget {
-  final Pet pet;
+  final Pets pet;
 
   const PetDetailScreen({super.key, required this.pet});
 
@@ -19,21 +20,30 @@ class PetDetailScreen extends StatelessWidget {
       body: Column(
         children: [
           // Imagem do Pet
-          Container(
+          SizedBox(
             height: 250,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(pet.image),
-                fit: BoxFit.contain,
-              ),
+            child: PageView.builder(
+              itemCount: pet.imageUrls.length, // Conta o número de imagens
+              itemBuilder: (context, index) {
+                return Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(
+                          pet.imageUrls[index]), // Usa a imagem do array
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                );
+              },
             ),
           ),
+
           const SizedBox(height: 16),
           // Nome do Pet e Preço
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center, // Centraliza a Row
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
                   child: Text(
@@ -53,7 +63,7 @@ class PetDetailScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(
-              pet.location,
+              pet.age,
               style: const TextStyle(
                 fontSize: 16,
                 color: Colors.grey,
@@ -69,9 +79,9 @@ class PetDetailScreen extends StatelessWidget {
               children: [
                 Column(
                   children: [
-                    Text(pet.sex,
+                    Text(pet.name,
                         style: const TextStyle(fontWeight: FontWeight.bold)),
-                    const Text('Sexo'),
+                    const Text('Name'),
                   ],
                 ),
                 Column(
@@ -79,13 +89,6 @@ class PetDetailScreen extends StatelessWidget {
                     Text(pet.color,
                         style: const TextStyle(fontWeight: FontWeight.bold)),
                     const Text('Cor'),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Text(pet.breed,
-                        style: const TextStyle(fontWeight: FontWeight.bold)),
-                    const Text('Raça'),
                   ],
                 ),
                 Column(
@@ -99,21 +102,9 @@ class PetDetailScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          // Descrição
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(
-              pet.description,
-              style: const TextStyle(fontSize: 16),
-              textAlign: TextAlign.justify,
-            ),
-          ),
-          const SizedBox(height: 8),
-
           // Botão Adotar
           Column(
             children: [
-              // Outros widgets, como a imagem ou informações do pet
               const SizedBox(height: 150), // Espaço extra acima do botão
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),

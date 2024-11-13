@@ -1,61 +1,6 @@
-import 'package:adocaopetsflutter/screens/Pets.dart';
-import 'package:adocaopetsflutter/screens/petsDetailsScreen.dart';
 import 'package:flutter/material.dart';
-
-
-final List<Pet> pets = [
-  
- Pet(
-    name: "Samantha",
-    image: 'assets/img/pet_image.png',
-    location: "Cotia(2.5 km)",
-    sex: "Femêa",
-    color: "Bege",
-    breed: "Golden",
-    weight: 12.0,
-    description: "Cachorro que ama água e muito amoroso",
-  ),
-  Pet(
-      name: 'Caramelo',
-      image: 'assets/img/caramelo.png',
-      location: 'São Paulo (8.9Km)',
-      sex: 'Macho',
-      color: 'Caramelo',
-      breed: 'Labrador mestiço',
-      weight: 8,
-      description: 'Caramelo doido para distribuir amor por ai'),
-  Pet(
-    name: "Samantha",
-    image: 'assets/img/pet_image.png',
-    location: "Cotia(2.5 km)",
-    sex: "Femêa",
-    color: "Bege",
-    breed: "Golden",
-    weight: 12.0,
-    description: "Cachorro que ama água e muito amoroso",
-  ),
-  Pet(
-      name: 'Caramelo',
-      image: 'assets/img/caramelo.png',
-      location: 'São Paulo (8.9Km)',
-      sex: 'Macho',
-      color: 'Caramelo',
-      breed: 'Labrador mestiço',
-      weight: 8,
-      description: 'Caramelo doido para distribuir amor por ai'),
-  Pet(
-      name: 'Caramelo',
-      image: 'assets/img/caramelo.png',
-      location: 'São Paulo (8.9Km)',
-      sex: 'Macho',
-      color: 'Caramelo',
-      breed: 'Labrador mestiço',
-      weight: 8,
-      description: 'Caramelo doido para distribuir amor por ai'),
-  // Outros pets...
-];
-
-
+import '../controller/pets_list_controller.dart';
+import 'petsDetailsScreen.dart';
 
 class PetsListScreen extends StatefulWidget {
   const PetsListScreen({super.key});
@@ -65,34 +10,16 @@ class PetsListScreen extends StatefulWidget {
 }
 
 class _PetsListScreenState extends State<PetsListScreen> {
-  int _selectedIndex = 0;
-
-  // Função para alternar entre páginas do BottomNavigationBar
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-
-    // Navegar para as páginas correspondentes ao clicar no menu
-    if (index == 0) {
-      // Aqui seria para a página da lista de pets adotados
-      Navigator.pushNamed(context, '/adoptedPets');
-    } else if (index == 1) {
-      // Ação para o segundo item (sem navegação por enquanto)
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Na Adoção de Pets do Ricks, acreditamos que cada animal merece uma segunda chance. Nossa missão é conectar corações e lares a peludos que estão à espera de um novo começo. Os pets que resgatamos vêm de diversas histórias, mas todos têm algo em comum: a vontade de amar e serem amados.")),
-      );
-    }
-  }
+  final PetsListController controller = PetsListController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Pets Disponíveis')),
       body: ListView.builder(
-        itemCount: pets.length,
+        itemCount: controller.pets.length,
         itemBuilder: (context, index) {
-          final pet = pets[index];
+          final pet = controller.pets[index];
           return GestureDetector(
             onTap: () {
               // Navega para a página de detalhes do pet ao clicar no card
@@ -116,8 +43,9 @@ class _PetsListScreenState extends State<PetsListScreen> {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.asset(
-                        pet.image,
+                      child: Image.network(
+                        pet.imageUrls[
+                            index], // Acessando o array de imagens com o índice
                         fit: BoxFit.contain,
                         width: 120,
                         height: 120,
@@ -137,12 +65,12 @@ class _PetsListScreenState extends State<PetsListScreen> {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            '${pet.breed} | ${pet.sex}',
+                            '${pet.age} | ${pet.color}',
                             style: const TextStyle(fontSize: 16),
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            pet.location,
+                            pet.name,
                             style: const TextStyle(
                               color: Colors.grey,
                               fontSize: 14,
@@ -170,9 +98,13 @@ class _PetsListScreenState extends State<PetsListScreen> {
             label: 'Sobre',
           ),
         ],
-        currentIndex: _selectedIndex,
+        currentIndex: controller.selectedIndex,
         selectedItemColor: Colors.orange,
-        onTap: _onItemTapped,
+        onTap: (index) {
+          setState(() {
+            controller.onItemTapped(context, index);
+          });
+        },
       ),
     );
   }

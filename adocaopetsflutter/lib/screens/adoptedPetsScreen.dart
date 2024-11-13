@@ -15,9 +15,22 @@ class AdoptedPetsScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final pet = adoptedPets[index];
                 return ListTile(
-                  leading: Image.asset(pet.image, width: 50, height: 50),
+                  leading: // Carrossel de Imagens
+                      SizedBox(
+                    height: 250,
+                    child: PageView.builder(
+                      itemCount: pet.imageUrls.length,
+                      itemBuilder: (context, index) {
+                        return Image.network(
+                          pet.imageUrls[
+                              index], // Acessa cada URL individualmente
+                          fit: BoxFit.cover,
+                        );
+                      },
+                    ),
+                  ),
                   title: Text(pet.name),
-                  subtitle: Text('${pet.breed} | ${pet.sex}'),
+                  subtitle: Text('${pet.age} | ${pet.color}'),
                 );
               },
             ),
