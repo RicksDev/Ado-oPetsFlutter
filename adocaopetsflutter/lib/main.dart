@@ -1,6 +1,7 @@
 import 'package:adocaopetsflutter/Widgets/loginWidget.dart';
 import 'package:adocaopetsflutter/screens/adoptedPetsScreen.dart';
 import 'package:adocaopetsflutter/screens/dashboardScreen.dart';
+import 'package:adocaopetsflutter/screens/petsListScreen.dart';
 import 'package:flutter/material.dart';
 
 String? registeredName;
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
                 Navigator.pushReplacementNamed(context, '/adoptedPets');
               },
             ),
-        '/adoptedPets': (context) => const AdoptedPetsScreen(),
+        '/adoptedPets': (context) => const PetsListScreen(),
       },
     );
   }

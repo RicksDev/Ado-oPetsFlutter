@@ -19,10 +19,10 @@ class AdoptedPetsScreen extends StatelessWidget {
                       SizedBox(
                     height: 250,
                     child: PageView.builder(
-                      itemCount: pet.imageUrls.length,
+                      itemCount: pet.images.length,
                       itemBuilder: (context, index) {
                         return Image.network(
-                          pet.imageUrls[
+                          pet.images[
                               index], // Acessa cada URL individualmente
                           fit: BoxFit.cover,
                         );
