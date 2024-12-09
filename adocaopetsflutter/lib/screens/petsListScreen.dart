@@ -171,13 +171,13 @@ class _PetsListScreenState extends State<PetsListScreen> {
                       borderRadius: BorderRadius.circular(16),
                     ),
                     margin: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 16),
+                        vertical: 8, horizontal: 18),
                     child: Container(
                       padding: const EdgeInsets.all(16),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(pet.images[0]),
+                          // Text(pet.images[0]),
                           ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: Image.network(
