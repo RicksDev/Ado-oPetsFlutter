@@ -136,6 +136,7 @@
 //   }
 // }
 import 'package:adocaopetsflutter/model/pet.dart';
+import 'package:adocaopetsflutter/screens/adoptedPetsScreen.dart';
 import 'package:flutter/material.dart';
 
 // Lista global para salvar os pets "adotados"
@@ -235,28 +236,38 @@ class PetDetailScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: ElevatedButton(
-                onPressed: () {
-                  if (!adoptedPets.contains(pet)) {
-                    adoptedPets.add(pet);
+  onPressed: () {
+    if (!adoptedPets.contains(pet)) {
+      adoptedPets.add(pet);
 
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                          content: Text('Pet adicionado à lista de "Me Adote"!')),
-                    );
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                          content: Text('Pet já está na lista de "Me Adote"!')),
-                    );
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange,
-                  padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 25),
-                  textStyle: const TextStyle(fontSize: 20),
-                ),
-                child: const Text('Me adote!'),
-              ),
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Pet adicionado à lista de "Me Adote"!')),
+      );
+
+      // Navega para a tela de pets adotados
+      Future.delayed(const Duration(milliseconds: 500), () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const AdoptedPetsScreen(),
+          ),
+        );
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Pet já está na lista de "Me Adote"!')),
+      );
+    }
+  },
+  style: ElevatedButton.styleFrom(
+    backgroundColor: Colors.orange,
+    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 25),
+    textStyle: const TextStyle(fontSize: 20),
+  ),
+  child: const Text('Me adote!'),
+),
+
+
             ),
           ],
         ),

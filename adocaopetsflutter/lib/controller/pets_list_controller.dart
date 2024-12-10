@@ -38,6 +38,7 @@
 // }
 import 'dart:convert';
 import 'package:adocaopetsflutter/model/pet.dart';
+import 'package:adocaopetsflutter/screens/adoptedPetsScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -75,18 +76,42 @@ class PetsListController {
   }
 
   // Função para navegação
-  void onItemTapped(BuildContext context, int index) {
-    selectedIndex = index;
+  // void onItemTapped(BuildContext context, int index) {
+  //   selectedIndex = index;
 
-    if (index == 0) {
-      Navigator.pushNamed(context, '/adoptedPets');
-    } else if (index == 1) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-              "Na Adoção de Pets do Ricks, acreditamos que cada animal merece uma segunda chance. Nossa missão é conectar corações e lares a peludos que estão à espera de um novo começo. Os pets que resgatamos vêm de diversas histórias, mas todos têm algo em comum: a vontade de amar e serem amados."),
+  //   if (index == 0) {
+  //     Navigator.pushNamed(context, '/adoptedPets');
+  //   } else if (index == 1) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(
+  //         content: Text(
+  //             "Na Adoção de Pets do Ricks, acreditamos que cada animal merece uma segunda chance. Nossa missão é conectar corações e lares a peludos que estão à espera de um novo começo. Os pets que resgatamos vêm de diversas histórias, mas todos têm algo em comum: a vontade de amar e serem amados."),
+  //       ),
+  //     );
+  //   }
+  // }
+
+  void onItemTapped(BuildContext context, int index) {
+  selectedIndex = index;
+
+    
+
+  if (index == 0) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const AdoptedPetsScreen(),
+      ),
+    );
+  } else if (index == 1) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+          "Na Adoção de Pets do Ricks, acreditamos que cada animal merece uma segunda chance. Nossa missão é conectar corações e lares a peludos que estão à espera de um novo começo. Os pets que resgatamos vêm de diversas histórias, mas todos têm algo em comum: a vontade de amar e serem amados.",
         ),
-      );
-    }
+      ),
+    );
   }
+}
+
 }
