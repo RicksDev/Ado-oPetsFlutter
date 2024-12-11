@@ -42,13 +42,16 @@ import 'package:adocaopetsflutter/screens/adoptedPetsScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class PetsListController {
-  List<Pets> pets = []; // Lista de pets mutável para ser preenchida pela API
-  int selectedIndex = 0;
+// 
 
-  // Função para buscar dados da API
-  Future<void> fetchPets() async {
-    const url = 'https://pet-adopt-dq32j.ondigitalocean.app/pet/pets';
+class PetsListController {
+  List<Pets> pets = [];
+  int selectedIndex = 0;
+  int currentPage = 1;
+
+  Future<void> fetchPets({int page = 1}) async {
+    final url =
+        'https://pet-adopt-dq32j.ondigitalocean.app/pet/pets?page=$page';
 
     try {
       final response = await http.get(Uri.parse(url));
@@ -57,16 +60,12 @@ class PetsListController {
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
-        print("=--===========================");
-        print(data["pets"]);
-        var allData = data["pets"];
+        final List<dynamic> allData = data["pets"] ?? [];
 
-         allData.forEach((json) {
-          print(json);
-          pets.add(Pets.fromJson(json));
-        });
+        pets = allData.map((json) => Pets.fromJson(json)).toList();
+        currentPage = page;
 
-        debugPrint('Pets atribuídos: $pets');
+        debugPrint('Pets carregados para a página $page: $pets');
       } else {
         debugPrint('Erro ao carregar os pets: ${response.statusCode}');
       }
@@ -74,23 +73,6 @@ class PetsListController {
       debugPrint('Erro ao buscar pets: $e');
     }
   }
-
-  // Função para navegação
-  // void onItemTapped(BuildContext context, int index) {
-  //   selectedIndex = index;
-
-  //   if (index == 0) {
-  //     Navigator.pushNamed(context, '/adoptedPets');
-  //   } else if (index == 1) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(
-  //         content: Text(
-  //             "Na Adoção de Pets do Ricks, acreditamos que cada animal merece uma segunda chance. Nossa missão é conectar corações e lares a peludos que estão à espera de um novo começo. Os pets que resgatamos vêm de diversas histórias, mas todos têm algo em comum: a vontade de amar e serem amados."),
-  //       ),
-  //     );
-  //   }
-  // }
-
   void onItemTapped(BuildContext context, int index) {
   selectedIndex = index;
 
@@ -113,5 +95,8 @@ class PetsListController {
     );
   }
 }
-
 }
+
+
+
+
